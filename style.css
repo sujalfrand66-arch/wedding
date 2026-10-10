@@ -1483,16 +1483,71 @@ body {
   .music-player {
     bottom: 18px;
     right: 14px;
+    max-width: calc(100vw - 28px);
   }
 
   .music-player-bar {
+    display: inline-flex;
+    align-items: center;
     padding: 5px 10px 5px 6px;
     gap: 6px;
+    max-width: 100%;
+  }
+
+  .music-btn-play {
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 11px;
+    box-sizing: border-box;
+    margin: 0;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  .music-track-controls {
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    gap: 4px;
+    padding-left: 6px;
+    margin: 0;
+  }
+
+  .music-ctrl-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .music-ctrl-btn svg {
+    display: block;
+  }
+
+  .music-track-btn {
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    box-sizing: border-box;
+    margin: 0;
+    line-height: 1;
+    vertical-align: middle;
   }
 
   .current-track-title {
-    max-width: 110px;
+    max-width: 105px;
     font-size: 0.78rem;
+    line-height: 1;
   }
 }
 
@@ -1516,30 +1571,124 @@ body {
   .music-player {
     bottom: 14px;
     right: 10px;
+    max-width: calc(100vw - 20px);
   }
 
   .music-player-bar {
-    padding: 5px 8px 5px 5px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px 4px 5px;
     gap: 4px;
+    max-width: 100%;
   }
 
   .music-btn-play {
-    padding: 5px 9px 5px 8px;
+    height: 28px;
+    padding: 0 9px 0 8px;
     gap: 5px;
     font-size: 0.68rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  .music-btn-play:hover,
+  .music-ctrl-btn:hover,
+  .music-track-btn:hover {
+    transform: none;
+  }
+
+  .music-btn-play:active,
+  .music-ctrl-btn:active,
+  .music-track-btn:active {
+    transform: scale(0.96);
+  }
+
+  .music-play-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
   }
 
   .music-state-text {
     font-size: 0.68rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .music-btn-icon-wrap {
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 13px;
+    height: 13px;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .music-track-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 28px;
+    padding-left: 5px;
+    margin: 0;
+  }
+
+  .music-ctrl-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .music-ctrl-btn svg {
+    display: block;
+  }
+
+  .music-track-btn {
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 5px;
+    box-sizing: border-box;
+    margin: 0;
+    line-height: 1;
+    vertical-align: middle;
   }
 
   .current-track-title {
-    max-width: 75px;
+    max-width: 70px;
     font-size: 0.70rem;
+    line-height: 1;
+  }
+
+  .music-dropdown-arrow {
+    font-size: 0.65rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
   }
 
   .music-playlist-panel {
     width: 240px;
+    max-width: calc(100vw - 20px);
   }
 }
 
