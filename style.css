@@ -1,0 +1,1042 @@
+/* =============================================
+   WEDDING INVITATION — style.css
+   Warm cream & gold Indian luxury aesthetic
+============================================= */
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+  --cream:         #FDF6EC;
+  --cream-dark:    #F5E6D0;
+  --peach:         #F9EDE0;
+  --peach-mid:     #F0D5B8;
+  --gold:          #C9972A;
+  --gold-light:    #E8C056;
+  --gold-dark:     #8B6914;
+  --maroon:        #7B1E3C;
+  --maroon-light:  #A63055;
+  --text-dark:     #3D2B1F;
+  --text-mid:      #6B4C35;
+  --text-light:    #9C7A5C;
+
+  --font-script:   'Great Vibes', cursive;
+  --font-serif:    'Cormorant Garamond', Georgia, serif;
+  --font-sans:     'Montserrat', sans-serif;
+
+  --corner-size:   220px;
+  --corner-sm:     150px;
+  --lantern-h:     220px;
+  --lantern-sm:    160px;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--cream);
+  color: var(--text-dark);
+  font-family: var(--font-serif);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Scenes ---------- */
+.scene {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 100px 20px;
+}
+
+.scene__inner {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.scene__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ---------- Scene-specific backgrounds ---------- */
+.scene-1 { background: linear-gradient(160deg, #FDF6EC 0%, #F8EAD8 50%, #F5E0C8 100%); }
+.scene-2 { background: linear-gradient(160deg, #FBF3E8 0%, #F5E5D0 50%, #EED8C0 100%); }
+.scene-3 { background: linear-gradient(160deg, #FDF6EC 0%, #F9EBD8 50%, #F4E0C8 100%); }
+.scene-4 { background: linear-gradient(160deg, #FDF6EC 0%, #F9EBD8 50%, #F4E0C8 100%); }
+.scene-5 { background: linear-gradient(160deg, #FBF3E8 0%, #F5E5D0 60%, #EED8C0 100%); }
+
+/* ---------- Reusable 4-Corner Floral Decoration System ---------- */
+.floral-corner,
+.rose-corner,
+.floral {
+  position: absolute;
+  width: var(--rose-corner-w, clamp(85px, 15vw, 175px));
+  height: auto;
+  max-width: 26vw;
+  max-height: 24vh;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 2; /* Positioned safely behind scene inner content (z-index: 10) */
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+  filter: drop-shadow(0 4px 12px rgba(100, 40, 10, 0.08));
+}
+
+/* Specific corner placements - preserving native asset orientation */
+.floral-corner--tl,
+.floral-corner--left-top,
+.rose-corner--tl,
+.floral--tl {
+  top: 0;
+  left: 0;
+  transform: none;
+}
+
+.floral-corner--tr,
+.floral-corner--right-top,
+.rose-corner--tr,
+.floral--tr {
+  top: 0;
+  right: 0;
+  transform: none;
+}
+
+.floral-corner--bl,
+.floral-corner--left-bottom,
+.rose-corner--bl,
+.floral--bl {
+  bottom: 0;
+  left: 0;
+  transform: none;
+}
+
+.floral-corner--br,
+.floral-corner--right-bottom,
+.rose-corner--br,
+.floral--br {
+  bottom: 0;
+  right: 0;
+  transform: none;
+}
+
+/* ---------- Inter-Scene Floral Connectors ---------- */
+.scene-connector-floral {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  width: clamp(140px, 25vw, 220px);
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+  filter: drop-shadow(0 6px 14px rgba(100, 40, 10, 0.12));
+}
+
+/* ---------- Golden Lantern Images ---------- */
+.lantern {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  height: var(--lantern-h);
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  top: 25px;
+  filter: drop-shadow(0 8px 20px rgba(180, 120, 20, 0.25));
+}
+
+.lantern--left  { left: 30px; }
+.lantern--right { right: 30px; }
+
+/* ---------- Gold Ornament (circular mandala) ---------- */
+.ornament {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.15;
+  mix-blend-mode: multiply;
+}
+
+.ornament--top {
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ornament--bottom {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Mandala BG in scene 2 — subtle, z-index BELOW content */
+.mandala-bg {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  width: 380px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.12;
+  filter: grayscale(0.8) opacity(0.15);
+  mix-blend-mode: multiply;
+}
+
+
+.mandala-bg--1 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ganesha-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px auto;
+}
+
+
+/* ---------- Peach Panel (Scenes 3 & 4) ---------- */
+.peach-panel {
+  background: linear-gradient(180deg, #FDF0E0 0%, #F8E4C8 100%);
+  border: 1.5px solid rgba(201, 151, 42, 0.35);
+  border-radius: 4px;
+  padding: 50px 48px;
+  position: relative;
+  width: 100%;
+  box-shadow:
+    inset 0 0 0 8px rgba(201, 151, 42, 0.06),
+    0 20px 60px rgba(100, 60, 10, 0.12);
+}
+
+/* Scalloped decoration using pseudo-elements on top & bottom */
+.peach-panel::before,
+.peach-panel::after {
+  content: '';
+  display: block;
+  height: 12px;
+  background-image: radial-gradient(circle at 50% 0%, transparent 70%, rgba(201, 151, 42, 0.2) 70%);
+  background-size: 20px 12px;
+  background-repeat: repeat-x;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.peach-panel::before {
+  top: 0;
+  background-position: top;
+  background-image: radial-gradient(circle at 50% 100%, rgba(248, 228, 200, 1) 68%, transparent 68%);
+}
+
+.peach-panel::after {
+  bottom: 0;
+  background-image: radial-gradient(circle at 50% 0%, rgba(248, 228, 200, 1) 68%, transparent 68%);
+  background-position: bottom;
+}
+
+/* Panel ornament (inside panels) — use opacity trick for peach bg */
+.panel-ornament {
+  width: 64px;
+  height: 64px;
+  opacity: 0.20;
+  object-fit: contain;
+  filter: sepia(1) saturate(1.5) hue-rotate(5deg);
+}
+
+/* ---------- Gold Divider ---------- */
+.gold-divider {
+  width: 240px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  position: relative;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.gold-divider::before { left: 50%; transform: translate(-50%, -50%); }
+.gold-divider::after  { display: none; }
+
+/* ---------- Typography ---------- */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.save-date-title {
+  font-family: var(--font-script);
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: var(--maroon);
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+.couple-names {
+  font-family: var(--font-script);
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  color: var(--maroon);
+  line-height: 1.15;
+  font-weight: 400;
+}
+
+.couple-names--large {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+}
+
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.amp-line {
+  font-size: 1.4rem;
+  color: var(--gold);
+}
+
+.date-text {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  letter-spacing: 0.04em;
+}
+
+.venue-text {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.family-text {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+.host-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.host-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 3.2vw, 1.45rem);
+  font-weight: 600;
+  color: var(--maroon);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.host-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(0.7rem, 2vw, 0.85rem);
+  font-weight: 500;
+  color: var(--gold-dark);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.amp {
+  display: inline-block;
+  font-family: var(--font-script);
+  font-size: 1.8rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+/* ---------- Scene 1 ---------- */
+.scene-1__intro {
+  font-size: 1rem;
+}
+
+/* ---------- Scene 2 — Ganesha ---------- */
+.ganesha-img {
+  width: 280px;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 4px 24px rgba(180, 120, 10, 0.25));
+  position: relative;
+  z-index: 12;  /* ensure it sits above any background elements */
+}
+
+.ganesha-img--small {
+  width: 180px;
+}
+
+.scene-2__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--maroon);
+  letter-spacing: 0.04em;
+}
+
+.scene-2__subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.scene-2__verse {
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+/* ---------- Invitation Details (Scene 3) ---------- */
+.invitation-details {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+
+.detail-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 120px;
+}
+
+.detail-label {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  font-weight: 500;
+}
+
+.detail-value {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.detail-divider {
+  color: var(--gold);
+  font-size: 1rem;
+  align-self: center;
+  opacity: 0.7;
+}
+
+/* ---------- Scene 4 — Events ---------- */
+.functions-title {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--maroon);
+  font-weight: 400;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+.event-item {
+  padding: 22px 16px;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+  border-radius: 8px;
+  transition: transform 0.35s ease, background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .event-item:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 20px rgba(201, 151, 42, 0.12);
+  }
+}
+
+.event-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8B1E26;
+  background: rgba(201, 151, 42, 0.12);
+  border: 1px solid rgba(201, 151, 42, 0.3);
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.event-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--maroon);
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
+.event-details-box {
+  background: rgba(253, 240, 224, 0.6);
+  border: 1px dashed rgba(201, 151, 42, 0.4);
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin: 8px auto 10px auto;
+  text-align: center;
+}
+
+.event-detail-line {
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  color: var(--maroon);
+  margin: 2px 0;
+}
+
+.event-desc {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  font-style: italic;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+/* ---------- Love Story Typography ---------- */
+.story-text-wrap {
+  max-width: 520px;
+  margin: 20px auto 10px auto;
+  text-align: center;
+}
+
+.story-paragraph {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #4A3525;
+  margin-bottom: 14px;
+}
+
+.highlight-quote {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--maroon);
+  background: linear-gradient(90deg, transparent, rgba(201, 151, 42, 0.08), transparent);
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+
+
+.event-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 6px 0;
+  gap: 10px;
+}
+
+.event-divider::before,
+.event-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 151, 42, 0.4));
+}
+
+.event-divider::after {
+  background: linear-gradient(90deg, rgba(201, 151, 42, 0.4), transparent);
+}
+
+.divider-ornament {
+  width: 32px;
+  height: 32px;
+  opacity: 0.5;
+  object-fit: contain;
+  filter: sepia(1) saturate(1.5) hue-rotate(5deg) brightness(0.8);
+}
+
+/* ---------- Scene 5 — RSVP & Mandala ---------- */
+.scene-5__mandala-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.scene-5__mandala-bg {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: bottom;
+  opacity: 0.18;
+  display: block;
+}
+
+.closing-title {
+  font-family: var(--font-script);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: var(--maroon);
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.rsvp-block {
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(201, 151, 42, 0.25);
+  border-radius: 4px;
+  padding: 28px 36px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.rsvp-title {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+.rsvp-text {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  text-align: center;
+}
+
+.rsvp-text strong {
+  color: var(--maroon);
+  font-weight: 600;
+}
+
+.rsvp-contacts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.rsvp-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.contact-name {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  letter-spacing: 0.02em;
+}
+
+.contact-number {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--gold-dark);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.contact-number:hover {
+  color: var(--maroon);
+}
+
+.rsvp-sep {
+  color: var(--gold);
+  font-size: 1.2rem;
+  opacity: 0.6;
+}
+
+.rsvp-ornament {
+  width: 40px;
+  height: auto;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+}
+
+.closing-blessing {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--maroon);
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Custom Wedding Artwork Styling ---------- */
+
+/* Scene 1 — Couple Swing Arch Illustration */
+.illustration-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 18px auto 22px auto;
+  max-width: 320px;
+}
+
+.couple-swing-img {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 8px 16px rgba(100, 60, 10, 0.08));
+}
+
+/* Scene 3 — Real Photo of Harsh & Harishta inside Arch Frame */
+.couple-photo-container {
+  position: relative;
+  width: 230px;
+  height: 310px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 120px 120px 8px 8px; /* Arch shape framing */
+  border: 2px solid var(--gold);
+  box-shadow: 0 12px 30px rgba(100, 60, 10, 0.15), inset 0 0 0 4px rgba(253, 240, 224, 0.8);
+  background: var(--cream);
+}
+
+.arch-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+}
+
+.couple-real-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  z-index: 1;
+  transition: transform 0.5s ease;
+}
+
+.couple-photo-container:hover .couple-real-photo {
+  transform: scale(1.03);
+}
+
+/* Scene 3 — Hathleva (Hand Holding) Illustration */
+.hathleva-wrap {
+  margin: 22px auto 16px auto;
+  text-align: center;
+  max-width: 280px;
+}
+
+.hathleva-img {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+}
+
+.caption-text {
+  font-size: 0.95rem;
+  color: var(--gold-dark);
+  margin-top: 8px;
+}
+
+/* Scene 4 — Varmala Ceremony Illustration */
+.varmala-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto 25px auto;
+}
+
+.varmala-img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 6px 12px rgba(100, 60, 10, 0.08));
+}
+
+/* ---------- Curtain Overlay (Opening Animation) ---------- */
+.curtain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999999;
+  background: #180204;
+  display: flex;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.curtain-valance {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-height: 35vh;
+  object-fit: cover;
+  z-index: 10000002;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.8));
+}
+
+.curtain-panel {
+  position: absolute;
+  top: 0;
+  width: 50vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #230407;
+  z-index: 10000000;
+}
+
+.curtain-panel--left {
+  left: 0;
+  box-shadow: 15px 0 35px rgba(0, 0, 0, 0.7);
+}
+
+.curtain-panel--right {
+  right: 0;
+  box-shadow: -15px 0 35px rgba(0, 0, 0, 0.7);
+}
+
+.curtain-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.curtain-img--left {
+  object-position: left top;
+}
+
+.curtain-img--right {
+  object-position: right top;
+}
+
+/* Central Gold Seal on Curtains */
+.curtain-center-seal {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000003;
+  text-align: center;
+  background: radial-gradient(circle, rgba(40, 5, 10, 0.96) 0%, rgba(20, 2, 4, 0.98) 100%);
+  padding: 30px 42px;
+  border-radius: 18px;
+  border: 2px solid var(--gold);
+  box-shadow:
+    0 0 0 5px rgba(201, 151, 42, 0.25),
+    0 25px 60px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+  min-width: 260px;
+}
+
+
+.curtain-seal-icon {
+  width: 65px;
+  height: auto;
+  margin: 0 auto 8px auto;
+  filter: drop-shadow(0 4px 10px rgba(201, 151, 42, 0.5));
+}
+
+.curtain-seal-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.curtain-seal-names {
+  font-family: var(--font-script);
+  font-size: 2.2rem;
+  color: var(--gold-light);
+  margin-bottom: 4px;
+  line-height: 1.1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.curtain-seal-sub {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
+/* ---------- GSAP Reveal Animation States ---------- */
+
+.reveal {
+  opacity: 1; /* default visible — JS overrides if GSAP loads */
+}
+
+.reveal-item {
+  opacity: 1;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  :root {
+    --corner-size: 110px;
+    --rose-corner-w: 135px;
+    --lantern-h:   120px;
+  }
+
+  .scene {
+    padding: 90px 16px;
+  }
+
+  .rose-corner--tl { top: -10px; left: -10px; }
+  .rose-corner--tr { top: -10px; right: -10px; }
+  .rose-corner--bl { bottom: -10px; left: -10px; }
+  .rose-corner--br { bottom: -10px; right: -10px; }
+
+  .scene-connector-floral {
+    width: 170px;
+    bottom: -35px;
+  }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    padding: 0 35px; /* Prevent text touching lanterns */
+    margin-bottom: 8px;
+  }
+
+  .peach-panel {
+    padding: 36px 20px;
+  }
+
+  .lantern--left  { left: 6px; top: 0; }
+  .lantern--right { right: 6px; top: 0; }
+
+  .invitation-details {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .detail-divider {
+    transform: rotate(90deg);
+  }
+
+  .rsvp-contacts {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ganesha-img { width: 170px; }
+  .ganesha-img--small { width: 120px; }
+
+  .mandala-bg { width: 280px; }
+
+  .ornament { width: 90px; }
+
+  .gold-divider { width: 160px; }
+}
+
+
+@media (max-width: 480px) {
+  :root {
+    --corner-size: 100px;
+    --lantern-h:   110px;
+  }
+
+  .save-date-title { font-size: 2.8rem; }
+  .couple-names    { font-size: 2.2rem; }
+
+  .peach-panel {
+    padding: 28px 18px;
+    /* Simplified clip-path for small screens */
+    clip-path: none;
+    border-radius: 8px;
+  }
+}
+
+/* ---------- Scrollbar styling ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--peach-mid); border-radius: 3px; }
