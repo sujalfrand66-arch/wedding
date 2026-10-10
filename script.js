@@ -26,14 +26,14 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── Set initial hidden states across scenes ───────────── */
-  gsap.set('.reveal', { autoAlpha: 0, y: 35 });
-  gsap.set('.reveal-item', { autoAlpha: 0, y: 25 });
-  gsap.set('.floral-corner', { autoAlpha: 0, scale: 0.94 });
-  gsap.set('.rose-corner', { autoAlpha: 0, scale: 0.94 });
-  gsap.set('.lantern', { autoAlpha: 0, y: -25 });
-  gsap.set('.mandala-bg', { autoAlpha: 0, scale: 0.8 });
-  gsap.set('.ornament', { autoAlpha: 0, scale: 0.9 });
-  gsap.set('.ganesha-img', { autoAlpha: 0, scale: 0.85 });
+  gsap.set('.reveal', { autoAlpha: 0, y: 30 });
+  gsap.set('.reveal-item', { autoAlpha: 0, y: 20 });
+  gsap.set('.floral-corner', { autoAlpha: 0, scale: 0.95 });
+  gsap.set('.rose-corner', { autoAlpha: 0, scale: 0.95 });
+  gsap.set('.lantern', { autoAlpha: 0, y: -20 });
+  gsap.set('.mandala-bg', { autoAlpha: 0, scale: 0.85 });
+  gsap.set('.ornament', { autoAlpha: 0, scale: 0.92 });
+  gsap.set('.ganesha-img', { autoAlpha: 0, scale: 0.88 });
 
   /* ══════════════════════════════════════════════════════════
      HERO ENTRANCE ANIMATION (SCENE 1)
@@ -62,19 +62,19 @@
     heroTl
       // 1. Reveal corner florals gently
       .to(qa('.floral-corner, .rose-corner', s1), {
-        autoAlpha: 1, scale: 1, duration: 1.1, stagger: 0.08
+        autoAlpha: 1, scale: 1, duration: 0.8, stagger: 0.06
       })
       // 2. Drop lanterns & top mandala motif
       .to(qa('.lantern', s1), {
-        autoAlpha: 1, y: 0, duration: 1.2, stagger: 0.12
-      }, '-=0.8')
+        autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.1
+      }, '-=0.6')
       .to(qa('.ornament', s1), {
-        autoAlpha: 1, scale: 1, duration: 1.0
-      }, '-=0.8')
+        autoAlpha: 1, scale: 1, duration: 0.7
+      }, '-=0.6')
       // 3. Smooth entrance for main hero card content
       .to(q('.reveal', s1), {
-        autoAlpha: 1, y: 0, duration: 1.3, ease: 'expo.out'
-      }, '-=0.6');
+        autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out'
+      }, '-=0.5');
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -98,14 +98,14 @@
     });
 
     curtainTl
-      // 1. Hold closed curtain seal (0.8s pause)
-      .to('.curtain-center-seal', { autoAlpha: 0, scale: 0.85, duration: 0.5, delay: 0.8, ease: 'power2.in' })
-      // 2. Animate valance slightly upward while side curtains slide apart
-      .to('.curtain-valance', { y: -25, autoAlpha: 0, duration: 1.6, ease: 'power3.inOut' }, '-=0.1')
+      // 1. Brief pause to display royal center seal
+      .to('.curtain-center-seal', { autoAlpha: 0, scale: 0.9, duration: 0.4, delay: 0.35, ease: 'power2.in' })
+      // 2. Animate valance upward while side curtains slide apart
+      .to('.curtain-valance', { y: -30, autoAlpha: 0, duration: 1.0, ease: 'power2.inOut' }, '-=0.1')
       // 3. Slide left & right curtain panels outward smoothly
-      .to('.curtain-panel--left', { xPercent: -100, duration: 1.8, ease: 'power3.inOut' }, '<')
-      .to('.curtain-panel--right', { xPercent: 100, duration: 1.8, ease: 'power3.inOut' }, '<')
-      .to(curtainOverlay, { autoAlpha: 0, duration: 0.3 }, '-=0.3');
+      .to('.curtain-panel--left', { xPercent: -100, duration: 1.2, ease: 'power3.inOut' }, '<')
+      .to('.curtain-panel--right', { xPercent: 100, duration: 1.2, ease: 'power3.inOut' }, '<')
+      .to(curtainOverlay, { autoAlpha: 0, duration: 0.25 }, '-=0.25');
   } else {
     // If no curtain overlay or reduced motion preferred, unveil hero immediately
     if (curtainOverlay) curtainOverlay.style.display = 'none';
@@ -117,7 +117,7 @@
   function stDefaults(el, extra) {
     return Object.assign({
       trigger: el,
-      start: 'top 80%',
+      start: 'top 82%',
       toggleActions: 'play none none none',
     }, extra || {});
   }
@@ -130,17 +130,17 @@
     const s2Tl = gsap.timeline({ scrollTrigger: stDefaults(s2) });
     s2Tl
       .to(qa('.floral-corner, .rose-corner', s2), {
-        autoAlpha: 1, scale: 1, duration: 1.0, ease: 'power2.out', stagger: 0.08
+        autoAlpha: 1, scale: 1, duration: 0.8, ease: 'power2.out', stagger: 0.06
       })
       .to(qa('.mandala-bg', s2), {
-        autoAlpha: 1, scale: 1, duration: 1.5, ease: 'power1.out'
-      }, '-=0.8')
+        autoAlpha: 1, scale: 1, duration: 1.1, ease: 'power1.out'
+      }, '-=0.6')
       .to(q('.ganesha-img', s2), {
-        autoAlpha: 1, scale: 1, duration: 1.3, ease: 'back.out(1.2)'
-      }, '-=1.0')
+        autoAlpha: 1, scale: 1, duration: 0.9, ease: 'back.out(1.2)'
+      }, '-=0.8')
       .to(q('.reveal', s2), {
-        autoAlpha: 1, y: 0, duration: 1.1, ease: 'power3.out'
-      }, '-=0.8');
+        autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out'
+      }, '-=0.6');
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -151,14 +151,14 @@
     const s3Tl = gsap.timeline({ scrollTrigger: stDefaults(s3) });
     s3Tl
       .to(qa('.floral-corner, .rose-corner', s3), {
-        autoAlpha: 1, scale: 1, duration: 1.0, ease: 'power2.out', stagger: 0.08
+        autoAlpha: 1, scale: 1, duration: 0.8, ease: 'power2.out', stagger: 0.06
       })
       .to(qa('.lantern', s3), {
-        autoAlpha: 1, y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.12
-      }, '-=0.8')
+        autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1
+      }, '-=0.6')
       .to(q('.reveal', s3), {
-        autoAlpha: 1, y: 0, duration: 1.2, ease: 'power3.out'
-      }, '-=0.8');
+        autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out'
+      }, '-=0.6');
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -169,17 +169,17 @@
     const s4Tl = gsap.timeline({ scrollTrigger: stDefaults(s4) });
     s4Tl
       .to(qa('.floral-corner, .rose-corner', s4), {
-        autoAlpha: 1, scale: 1, duration: 1.0, ease: 'power2.out', stagger: 0.08
+        autoAlpha: 1, scale: 1, duration: 0.8, ease: 'power2.out', stagger: 0.06
       })
       .to(qa('.lantern', s4), {
-        autoAlpha: 1, y: 0, duration: 1.2, ease: 'power3.out', stagger: 0.12
-      }, '-=0.8')
+        autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1
+      }, '-=0.6')
       .to(q('.reveal', s4), {
-        autoAlpha: 1, y: 0, duration: 1.0, ease: 'power3.out'
-      }, '-=0.8')
+        autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out'
+      }, '-=0.6')
       .to(qa('.reveal-item', s4), {
-        autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.16
-      }, '-=0.6');
+        autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.12
+      }, '-=0.5');
   }
 
   /* ══════════════════════════════════════════════════════════
@@ -190,17 +190,17 @@
     const s5Tl = gsap.timeline({ scrollTrigger: stDefaults(s5) });
     s5Tl
       .to(qa('.floral-corner, .rose-corner', s5), {
-        autoAlpha: 1, scale: 1, duration: 1.0, ease: 'power2.out', stagger: 0.08
+        autoAlpha: 1, scale: 1, duration: 0.8, ease: 'power2.out', stagger: 0.06
       })
       .to(q('.ganesha-img', s5), {
-        autoAlpha: 1, scale: 1, duration: 1.1, ease: 'back.out(1.2)'
-      }, '-=0.8')
+        autoAlpha: 1, scale: 1, duration: 0.9, ease: 'back.out(1.2)'
+      }, '-=0.6')
       .to(q('.reveal', s5), {
-        autoAlpha: 1, y: 0, duration: 1.1, ease: 'power3.out'
-      }, '-=0.8');
+        autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out'
+      }, '-=0.6');
   }
 
-  /* ── Ambient slow rotation for mandala BGs ──────────────── */
+  /* ── Ambient slow rotation for mandala BGs & Lantern sway ─ */
   if (!prefersReducedMotion) {
     qa('.mandala-bg').forEach(function (el, i) {
       gsap.to(el, {
@@ -212,7 +212,6 @@
       });
     });
 
-    /* ── Gentle lantern sway ────────────────────────────────── */
     qa('.lantern--left').forEach(function (el) {
       gsap.to(el, {
         rotation: 3.5,

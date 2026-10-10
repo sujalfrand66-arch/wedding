@@ -835,12 +835,16 @@ body {
 }
 
 /* ---------- Curtain Overlay (Opening Animation) ---------- */
+/* ---------- Curtain Overlay (Opening Animation) ---------- */
 .curtain-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
   z-index: 9999999;
   background: #180204;
   display: flex;
@@ -854,8 +858,10 @@ body {
   left: 0;
   width: 100%;
   height: auto;
-  max-height: 35vh;
+  min-height: 80px;
+  max-height: 28vh;
   object-fit: cover;
+  object-position: top center;
   z-index: 10000002;
   pointer-events: none;
   filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.8));
@@ -864,8 +870,10 @@ body {
 .curtain-panel {
   position: absolute;
   top: 0;
-  width: 50vw;
-  height: 100vh;
+  bottom: 0;
+  width: 50.5%; /* 0.5% center overlap prevents sub-pixel rendering gap on mobile */
+  height: 100%;
+  height: 100dvh;
   overflow: hidden;
   background: #230407;
   z-index: 10000000;
@@ -899,13 +907,13 @@ body {
 /* Central Gold Seal on Curtains */
 .curtain-center-seal {
   position: absolute;
-  top: 52%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10000003;
   text-align: center;
   background: radial-gradient(circle, rgba(40, 5, 10, 0.96) 0%, rgba(20, 2, 4, 0.98) 100%);
-  padding: 30px 42px;
+  padding: 28px 40px;
   border-radius: 18px;
   border: 2px solid var(--gold);
   box-shadow:
@@ -913,8 +921,8 @@ body {
     0 25px 60px rgba(0, 0, 0, 0.85);
   pointer-events: none;
   min-width: 260px;
+  max-width: 90vw;
 }
-
 
 .curtain-seal-icon {
   width: 65px;
@@ -978,6 +986,20 @@ body {
   .scene-connector-floral {
     width: 170px;
     bottom: -35px;
+  }
+
+  .curtain-center-seal {
+    padding: 18px 22px;
+    min-width: 220px;
+    max-width: 88vw;
+  }
+
+  .curtain-seal-names {
+    font-size: 1.8rem;
+  }
+
+  .curtain-seal-icon {
+    width: 50px;
   }
 
   .eyebrow {
