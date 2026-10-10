@@ -1005,54 +1005,91 @@ body {
     0 0 0 4px rgba(201, 151, 42, 0.24);
 }
 
-/* Play / Pause Round Button */
+/* Visible Stop / Play Button with text and icons */
 .music-btn-play {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px 7px 11px;
+  border-radius: 999px;
   border: 1.5px solid var(--gold);
   background: radial-gradient(circle, #FDF6EC 0%, #F5E6D0 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--maroon);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.3s ease;
-  box-shadow: 0 2px 6px rgba(123, 30, 60, 0.15);
+  transition: transform 0.2s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 2px 8px rgba(123, 30, 60, 0.12);
   flex-shrink: 0;
 }
 
 .music-btn-play:hover {
-  transform: scale(1.06);
+  transform: translateY(-1px);
   border-color: var(--gold-light);
+  box-shadow: 0 4px 12px rgba(123, 30, 60, 0.2);
 }
 
 .music-btn-play:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
+}
+
+.music-play-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.music-state-text {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 /* Equalizer Wave Bars */
 .music-btn-icon-wrap {
   position: relative;
-  width: 18px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 2.5px;
+  gap: 2px;
 }
 
 .music-bar {
-  width: 2.8px;
+  width: 2.4px;
   background: var(--gold);
   border-radius: 2px;
   transition: height 0.25s ease, background-color 0.3s ease;
 }
 
-.music-bar-1 { height: 6px; }
-.music-bar-2 { height: 14px; }
-.music-bar-3 { height: 9px; }
+.music-bar-1 { height: 5px; }
+.music-bar-2 { height: 12px; }
+.music-bar-3 { height: 7px; }
 
-/* Playing State */
+/* Playing State: Active Stop Button */
+.music-player.is-playing .music-btn-play {
+  background: linear-gradient(135deg, rgba(123, 30, 60, 0.96) 0%, rgba(166, 48, 85, 0.96) 100%);
+  color: #FFFDF9;
+  border-color: var(--gold-light);
+  box-shadow: 0 3px 12px rgba(123, 30, 60, 0.25);
+}
+
+.music-player.is-playing .icon-play {
+  display: none;
+}
+.music-player.is-playing .icon-pause {
+  display: block;
+  fill: #FFFDF9;
+}
+
 .music-player.is-playing .music-player-bar {
   border-color: var(--gold-light);
   box-shadow:
@@ -1061,7 +1098,7 @@ body {
 }
 
 .music-player.is-playing .music-bar {
-  background: var(--maroon);
+  background: var(--gold-light);
 }
 
 .music-player.is-playing .music-bar-1 {
@@ -1075,31 +1112,33 @@ body {
 }
 
 @keyframes musicWave {
-  0%   { height: 4px; }
-  50%  { height: 15px; }
-  100% { height: 7px; }
+  0%   { height: 3px; }
+  50%  { height: 13px; }
+  100% { height: 6px; }
 }
 
-/* Paused State */
-.music-mute-line {
+/* Paused / Stopped State */
+.music-player.is-paused .icon-pause {
   display: none;
-  position: absolute;
-  top: 50%;
-  left: -2px;
-  right: -2px;
-  height: 2px;
-  background: var(--maroon-light);
-  transform: rotate(-45deg);
-  border-radius: 1px;
+}
+.music-player.is-paused .icon-play {
+  display: block;
+  fill: var(--maroon);
 }
 
 .music-player.is-paused .music-bar {
-  height: 4px;
+  height: 3px;
   background: var(--text-light);
+  animation: none;
 }
 
-.music-player.is-paused .music-mute-line {
-  display: block;
+/* Track Controls grouping */
+.music-track-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(201, 151, 42, 0.35);
 }
 
 /* Track Button (shows current song & opens playlist) */
@@ -1108,7 +1147,7 @@ body {
   border: none;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
   padding: 4px 6px;
   border-radius: 6px;
@@ -1121,27 +1160,19 @@ body {
   background: rgba(201, 151, 42, 0.12);
 }
 
-.music-label-prefix {
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-light);
-  font-weight: 500;
-}
-
 .current-track-title {
-  font-size: 0.82rem;
+  font-size: 0.80rem;
   font-weight: 600;
   color: var(--maroon);
-  letter-spacing: 0.03em;
-  max-width: 140px;
+  letter-spacing: 0.02em;
+  max-width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .music-dropdown-arrow {
-  font-size: 0.75rem;
+  font-size: 0.70rem;
   color: var(--gold);
   transition: transform 0.25s ease;
 }
@@ -1487,13 +1518,28 @@ body {
     right: 10px;
   }
 
-  .music-playlist-panel {
-    width: 240px;
+  .music-player-bar {
+    padding: 5px 8px 5px 5px;
+    gap: 4px;
+  }
+
+  .music-btn-play {
+    padding: 5px 9px 5px 8px;
+    gap: 5px;
+    font-size: 0.68rem;
+  }
+
+  .music-state-text {
+    font-size: 0.68rem;
   }
 
   .current-track-title {
-    max-width: 90px;
-    font-size: 0.74rem;
+    max-width: 75px;
+    font-size: 0.70rem;
+  }
+
+  .music-playlist-panel {
+    width: 240px;
   }
 }
 

@@ -402,36 +402,45 @@
 
     <!-- Main Compact Player Bar -->
     <div class="music-player-bar">
-      <!-- Play / Pause Main Trigger -->
-      <button id="music-play-btn" class="music-btn-play" type="button" aria-label="Play or Pause Music" title="Play / Pause">
-        <div class="music-btn-icon-wrap" aria-hidden="true">
+      <!-- Visible Stop / Play Button -->
+      <button id="music-play-btn" class="music-btn-play" type="button" aria-label="Play or Stop Music" title="Play / Stop Music">
+        <span class="music-play-icon-wrap" aria-hidden="true">
+          <!-- Play icon (shown when stopped) -->
+          <svg class="icon-play" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <!-- Pause/Stop icon (shown when playing) -->
+          <svg class="icon-pause" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+          </svg>
+        </span>
+        <span id="music-state-text" class="music-state-text">Play Music</span>
+        <span class="music-btn-icon-wrap" aria-hidden="true">
           <span class="music-bar music-bar-1"></span>
           <span class="music-bar music-bar-2"></span>
           <span class="music-bar music-bar-3"></span>
-          <span class="music-mute-line"></span>
-        </div>
+        </span>
       </button>
 
-      <!-- Track Information & Title Button (opens playlist) -->
-      <button id="music-track-btn" class="music-track-btn" type="button" aria-label="Change Song" title="Switch Song">
-        <span class="music-label-prefix">Music:</span>
-        <span id="current-track-title" class="current-track-title">Viah</span>
-        <span class="music-dropdown-arrow" aria-hidden="true">▾</span>
-      </button>
+      <!-- Track Switcher & Playlist Button -->
+      <div class="music-track-controls">
+        <button id="music-prev-btn" class="music-ctrl-btn music-btn-prev" type="button" aria-label="Previous Song" title="Previous Song">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+          </svg>
+        </button>
 
-      <!-- Previous Song Button -->
-      <button id="music-prev-btn" class="music-ctrl-btn music-btn-prev" type="button" aria-label="Previous Song" title="Previous Track">
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
-          <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
-        </svg>
-      </button>
+        <button id="music-track-btn" class="music-track-btn" type="button" aria-label="Change Song" title="Select Song">
+          <span id="current-track-title" class="current-track-title">Viah</span>
+          <span class="music-dropdown-arrow" aria-hidden="true">▾</span>
+        </button>
 
-      <!-- Next Song Button -->
-      <button id="music-next-btn" class="music-ctrl-btn music-btn-next" type="button" aria-label="Next Song" title="Next Track">
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
-          <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
-        </svg>
-      </button>
+        <button id="music-next-btn" class="music-ctrl-btn music-btn-next" type="button" aria-label="Next Song" title="Next Song">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" aria-hidden="true">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </aside>
 

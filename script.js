@@ -94,7 +94,7 @@
   let currentTrackIndex = 0;
   let currentVolume = 0.60; // Strictly 60% volume requirement
   let isMusicPlaying = false;
-  let userPrefersMuted = sessionStorage.getItem('harsh_harshita_music_muted') === 'true';
+  let userManuallyStopped = false;
 
   const bgMusic = document.getElementById('bg-music');
   const musicPlayer = document.getElementById('wedding-music-player');
@@ -128,14 +128,23 @@
       currentTitleEl.textContent = currentTrack.title;
     }
 
+    const stateTextEl = document.getElementById('music-state-text');
+    if (stateTextEl) {
+      stateTextEl.textContent = playing ? 'Stop Music' : 'Play Music';
+    }
+
+    if (playBtn) {
+      playBtn.setAttribute('title', playing ? 'Stop Wedding Music' : 'Play Wedding Music');
+      playBtn.setAttribute('aria-label', playing ? 'Stop Wedding Music' : 'Play Wedding Music');
+      playBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    }
+
     if (playing) {
       musicPlayer.classList.add('is-playing');
       musicPlayer.classList.remove('is-paused');
-      if (playBtn) playBtn.setAttribute('aria-pressed', 'true');
     } else {
       musicPlayer.classList.remove('is-playing');
       musicPlayer.classList.add('is-paused');
-      if (playBtn) playBtn.setAttribute('aria-pressed', 'false');
     }
 
     // Update active class in playlist popover
@@ -157,37 +166,10 @@
     }
   }
 
-  function fadeAudio(targetVolume, durationMs, callback) {
-    if (!bgMusic) return;
-    const startVolume = bgMusic.volume;
-    const steps = 15;
-    const stepInterval = durationMs / steps;
-    let currentStep = 0;
-
-    if (bgMusic._fadeInterval) clearInterval(bgMusic._fadeInterval);
-
-    bgMusic._fadeInterval = setInterval(function () {
-      currentStep++;
-      const factor = currentStep / steps;
-      bgMusic.volume = Math.max(0, Math.min(1, startVolume + (targetVolume - startVolume) * factor));
-
-      if (currentStep >= steps) {
-        clearInterval(bgMusic._fadeInterval);
-        bgMusic.volume = targetVolume;
-        if (callback) callback();
-      }
-    }, stepInterval);
-  }
-
-  function playMusic(fadeIn) {
-    if (!bgMusic || userPrefersMuted) return;
-
-    // Ensure volume is locked to current volume (0.60 default)
-    if (fadeIn) {
-      bgMusic.volume = 0;
-    } else {
-      bgMusic.volume = currentVolume;
-    }
+  // Attempt autoplay immediately (succeeds if browser allows unmuted audio)
+  function attemptAutoplay() {
+    if (!bgMusic || userManuallyStopped) return;
+    bgMusic.volume = currentVolume; // Guaranteed 0.60
 
     const promise = bgMusic.play();
     if (promise !== undefined) {
@@ -195,28 +177,49 @@
         .then(function () {
           isMusicPlaying = true;
           updatePlayerUI(true);
-          if (fadeIn) {
-            fadeAudio(currentVolume, 900);
-          } else {
-            bgMusic.volume = currentVolume;
-          }
         })
         .catch(function () {
-          // Autoplay restricted until valid user interaction
+          // Normal mobile browser autoplay restriction: will unlock on first user gesture
           isMusicPlaying = false;
           updatePlayerUI(false);
         });
     }
   }
 
-  function pauseMusic() {
+  function playMusic() {
     if (!bgMusic) return;
-    fadeAudio(0, 300, function () {
-      bgMusic.pause();
-      isMusicPlaying = false;
-      bgMusic.volume = currentVolume; // Reset back to user's set volume for next play
-      updatePlayerUI(false);
-    });
+    userManuallyStopped = false;
+    bgMusic.volume = currentVolume; // Guaranteed 0.60
+
+    const promise = bgMusic.play();
+    if (promise !== undefined) {
+      promise
+        .then(function () {
+          isMusicPlaying = true;
+          updatePlayerUI(true);
+        })
+        .catch(function () {
+          isMusicPlaying = false;
+          updatePlayerUI(false);
+        });
+    }
+  }
+
+  function stopMusic() {
+    if (!bgMusic) return;
+    userManuallyStopped = true;
+    bgMusic.pause();
+    isMusicPlaying = false;
+    bgMusic.volume = currentVolume; // Keep volume locked at 0.60
+    updatePlayerUI(false);
+  }
+
+  function togglePlayPause() {
+    if (isMusicPlaying) {
+      stopMusic();
+    } else {
+      playMusic();
+    }
   }
 
   function switchTrack(newIndex, autoPlay) {
@@ -224,28 +227,27 @@
     currentTrackIndex = (newIndex + playlist.length) % playlist.length;
     const track = playlist[currentTrackIndex];
 
-    const wasPlaying = isMusicPlaying || autoPlay;
+    const shouldPlay = isMusicPlaying || autoPlay || !userManuallyStopped;
 
-    // Load new audio source and maintain strictly consistent volume
+    // Load new audio source and maintain strictly consistent 60% volume
     bgMusic.src = track.src;
     bgMusic.volume = currentVolume;
 
-    updatePlayerUI(wasPlaying);
+    updatePlayerUI(shouldPlay);
 
-    if (wasPlaying && !userPrefersMuted) {
-      playMusic(false);
-    }
-  }
-
-  function togglePlayPause() {
-    if (isMusicPlaying) {
-      userPrefersMuted = true;
-      sessionStorage.setItem('harsh_harshita_music_muted', 'true');
-      pauseMusic();
-    } else {
-      userPrefersMuted = false;
-      sessionStorage.removeItem('harsh_harshita_music_muted');
-      playMusic(true);
+    if (shouldPlay && !userManuallyStopped) {
+      const promise = bgMusic.play();
+      if (promise !== undefined) {
+        promise
+          .then(function () {
+            isMusicPlaying = true;
+            updatePlayerUI(true);
+          })
+          .catch(function () {
+            isMusicPlaying = false;
+            updatePlayerUI(false);
+          });
+      }
     }
   }
 
@@ -298,8 +300,7 @@
       e.stopPropagation();
       const idx = parseInt(item.getAttribute('data-index'), 10);
       if (!isNaN(idx)) {
-        userPrefersMuted = false;
-        sessionStorage.removeItem('harsh_harshita_music_muted');
+        userManuallyStopped = false;
         switchTrack(idx, true);
       }
     });
@@ -310,7 +311,7 @@
     volumeSlider.addEventListener('input', function (e) {
       const val = parseInt(e.target.value, 10);
       currentVolume = Math.max(0, Math.min(1, val / 100));
-      if (bgMusic && isMusicPlaying) {
+      if (bgMusic) {
         bgMusic.volume = currentVolume;
       }
       if (volumeDisplay) {
@@ -329,19 +330,43 @@
     }
   });
 
-  // Autoplay handler on first user touch/tap anywhere
+  // Handle mobile browser autoplay restriction via first touch/interaction
   function triggerMusicOnFirstInteraction() {
-    if (!isMusicPlaying && !userPrefersMuted) {
-      playMusic(true);
+    if (!isMusicPlaying && !userManuallyStopped) {
+      attemptAutoplay();
     }
-    ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(function (evt) {
+    const interactionEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
+    interactionEvents.forEach(function (evt) {
       window.removeEventListener(evt, triggerMusicOnFirstInteraction);
+    });
+    const curtain = document.getElementById('curtain-overlay');
+    if (curtain) {
+      interactionEvents.forEach(function (evt) {
+        curtain.removeEventListener(evt, triggerMusicOnFirstInteraction);
+      });
+    }
+  }
+
+  const interactionEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
+  interactionEvents.forEach(function (evt) {
+    window.addEventListener(evt, triggerMusicOnFirstInteraction, { passive: true });
+  });
+
+  const curtainEl = document.getElementById('curtain-overlay');
+  if (curtainEl) {
+    interactionEvents.forEach(function (evt) {
+      curtainEl.addEventListener(evt, triggerMusicOnFirstInteraction, { passive: true });
     });
   }
 
-  ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(function (evt) {
-    window.addEventListener(evt, triggerMusicOnFirstInteraction, { passive: true });
-  });
+  // Attempt initial playback immediately on script load
+  attemptAutoplay();
+
+  // Also re-attempt on DOMContentLoaded and window load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attemptAutoplay);
+  }
+  window.addEventListener('load', attemptAutoplay);
 
   // Initialize UI display on load
   updatePlayerUI(false);
