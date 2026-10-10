@@ -4,8 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wedding Invitation — Harsh &amp; Harishta </title>
-  <meta name="description" content="You are cordially invited to celebrate the wedding of Harsh &amp; Harishta." />
+  <title>Wedding Invitation — Harsh &amp; Harshita</title>
+  <meta name="description" content="You are cordially invited to celebrate the wedding of Harsh &amp; Harshita." />
+
+  <!-- Preload Critical Curtain Images for Fast, Smooth Mobile Playback -->
+  <link rel="preload" as="image" href="curtain-left.png" />
+  <link rel="preload" as="image" href="curtain-right.png" />
+  <link rel="preload" as="image" href="curtain-valance.png" />
+  <link rel="preload" as="image" href="ganesha-gold.png" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +43,7 @@
     <div class="curtain-center-seal">
       <img src="ganesha-gold.png" alt="Shree Ganesh" class="curtain-seal-icon" />
       <p class="curtain-seal-eyebrow">— Royal Stage Invitation —</p>
-      <p class="curtain-seal-names">Harsh &amp; Harishta</p>
+      <p class="curtain-seal-names">Harsh &amp; Harshita</p>
       <p class="curtain-seal-sub">Wedding Celebrations</p>
     </div>
   </div>
@@ -77,11 +83,11 @@
         <!-- Couple Swing & Elephant Arch Frame Artwork -->
         <div class="illustration-frame couple-swing-wrap">
           <img src="couple-swing-arch.png" class="illustration-img couple-swing-img"
-            alt="Harsh and Harishta Wedding Illustration" />
+            alt="Harsh and Harshita Wedding Illustration" />
         </div>
 
         <p class="serif-italic scene-1__intro">We joyfully invite you to celebrate the wedding of</p>
-        <h2 class="couple-names">Harsh &amp; Harishta</h2>
+        <h2 class="couple-names">Harsh &amp; Harshita</h2>
         <div class="gold-divider"></div>
         <div class="host-info">
           <h3 class="host-name">HARSH DEEP</h3>
@@ -125,7 +131,7 @@
           Vakratunda Mahakaya Surya Koti Samaprabha<br />
           Nirvighnam Kuru Me Deva Sarva-Karyeshu Sarvada<br /><br />
           We begin this sacred journey seeking the grace and blessings of<br />
-          Lord Ganesha upon Harsh &amp; Harishta as they unite in holy matrimony.
+          Lord Ganesha upon Harsh &amp; Harshita as they unite in holy matrimony.
         </p>
         <div class="gold-divider"></div>
         <p class="eyebrow">Jai Ganesh Deva</p>
@@ -165,15 +171,15 @@
           <!-- Real Couple Photo in Ornamental Arch Frame -->
           <div class="couple-photo-container">
             <img src="ornamental-arch.png" class="arch-frame" alt="" aria-hidden="true" />
-            <img src="couple-photo.png" class="couple-real-photo" alt="Harsh and Harishta" />
+            <img src="couple-photo.png" class="couple-real-photo" alt="Harsh and Harshita" />
           </div>
 
-          <h2 class="couple-names couple-names--large">Harsh &amp; Harishta</h2>
+          <h2 class="couple-names couple-names--large">Harsh &amp; Harshita</h2>
 
           <div class="story-text-wrap">
             <p class="serif-italic story-paragraph">
               “Some stories begin with a meeting, while others grow through countless little moments of understanding.
-              Harsh and Harishta’s journey celebrates the joy of finding someone who listens, respects, supports, and
+              Harsh and Harshita’s journey celebrates the joy of finding someone who listens, respects, supports, and
               understands you.”
             </p>
             <p class="serif-italic story-paragraph">
@@ -249,7 +255,7 @@
 
             <!-- Event 2: Mehendi & Ratijoga -->
             <div class="event-item reveal-item">
-              <span class="event-tag">13 तारीख</span>
+              <span class="event-tag">15 तारीख</span>
               <h3 class="event-name">मेहंदी एवं रातीजोगा</h3>
               <p class="event-desc">
                 “Mehendi, music, traditional songs, and joyful moments bring both families together as the wedding
@@ -283,7 +289,7 @@
                 <p class="event-detail-line"><strong>स्थान:</strong> शिवबाड़ी मंदिर के पास, सामुदायिक भवन</p>
               </div>
               <p class="event-desc">
-                “Join us to bless Harsh and Harishta as they begin their new journey together. Your presence will make
+                “Join us to bless Harsh and Harshita as they begin their new journey together. Your presence will make
                 this celebration even more special.”
               </p>
             </div>
@@ -349,6 +355,85 @@
       </div>
     </div>
   </section>
+
+  <!-- =============================================
+       ROYAL WEDDING MUSIC PLAYER (PUNJABI & INSTRUMENTAL)
+  ============================================= -->
+  <audio id="bg-music" preload="metadata"></audio>
+
+  <aside id="wedding-music-player" class="music-player is-paused" aria-label="Wedding Music Player">
+    <!-- Collapsible Track List Popover -->
+    <div id="music-playlist-panel" class="music-playlist-panel" aria-hidden="true">
+      <div class="music-playlist-header">
+        <span class="music-playlist-heading">Wedding Tracks</span>
+        <button id="music-playlist-close" class="music-playlist-close" type="button" aria-label="Close Playlist">✕</button>
+      </div>
+      <ul class="music-track-list" role="listbox" aria-label="Select Wedding Track">
+        <li class="music-track-item is-active" data-index="0" role="option" aria-selected="true" tabindex="0">
+          <span class="track-icon">♪</span>
+          <div class="track-info">
+            <span class="track-name">Viah</span>
+            <span class="track-tag">Punjabi Wedding</span>
+          </div>
+          <span class="track-status">Playing</span>
+        </li>
+        <li class="music-track-item" data-index="1" role="option" aria-selected="false" tabindex="0">
+          <span class="track-icon">♪</span>
+          <div class="track-info">
+            <span class="track-name">Sazan Razi</span>
+            <span class="track-tag">Punjabi Wedding</span>
+          </div>
+          <span class="track-status"></span>
+        </li>
+        <li class="music-track-item" data-index="2" role="option" aria-selected="false" tabindex="0">
+          <span class="track-icon">♪</span>
+          <div class="track-info">
+            <span class="track-name">Romantic Instrumental</span>
+            <span class="track-tag">Soft Theme</span>
+          </div>
+          <span class="track-status"></span>
+        </li>
+      </ul>
+      <div class="music-volume-row">
+        <span class="volume-label">Volume: <strong id="music-volume-display">60%</strong></span>
+        <input type="range" id="music-volume-slider" class="music-volume-slider" min="0" max="100" value="60" aria-label="Music Volume" />
+      </div>
+    </div>
+
+    <!-- Main Compact Player Bar -->
+    <div class="music-player-bar">
+      <!-- Play / Pause Main Trigger -->
+      <button id="music-play-btn" class="music-btn-play" type="button" aria-label="Play or Pause Music" title="Play / Pause">
+        <div class="music-btn-icon-wrap" aria-hidden="true">
+          <span class="music-bar music-bar-1"></span>
+          <span class="music-bar music-bar-2"></span>
+          <span class="music-bar music-bar-3"></span>
+          <span class="music-mute-line"></span>
+        </div>
+      </button>
+
+      <!-- Track Information & Title Button (opens playlist) -->
+      <button id="music-track-btn" class="music-track-btn" type="button" aria-label="Change Song" title="Switch Song">
+        <span class="music-label-prefix">Music:</span>
+        <span id="current-track-title" class="current-track-title">Viah</span>
+        <span class="music-dropdown-arrow" aria-hidden="true">▾</span>
+      </button>
+
+      <!-- Previous Song Button -->
+      <button id="music-prev-btn" class="music-ctrl-btn music-btn-prev" type="button" aria-label="Previous Song" title="Previous Track">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
+          <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+        </svg>
+      </button>
+
+      <!-- Next Song Button -->
+      <button id="music-next-btn" class="music-ctrl-btn music-btn-next" type="button" aria-label="Next Song" title="Next Track">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
+          <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+        </svg>
+      </button>
+    </div>
+  </aside>
 
   <script src="script.js"></script>
 </body>
